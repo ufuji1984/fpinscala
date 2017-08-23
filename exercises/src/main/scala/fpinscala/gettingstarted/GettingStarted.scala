@@ -77,6 +77,18 @@ object MyModule {
     else go(n, 1, 1/*latest*/, 0/*previous*/)
   }
 
+  // https://github.com/fpinscala/fpinscala/blob/master/answerkey/gettingstarted/01.answer.scala
+  // 0 and 1 are the first two numbers in the sequence, so we start the accumulators with those.
+  // At every iteration, we add the two numbers to get the next one.
+  def fibAns(n: Int): Int = {
+    @annotation.tailrec
+    def loop(n: Int, prev: Int, cur: Int): Int =
+      if (n == 0) prev 
+      else loop(n - 1, cur, prev + cur)
+    loop(n, 0, 1)
+  }
+  // 確かにif分岐が少なくて記述がスッキリしてるが、最後のcurrentは使わない＝１つ分余計に計算してる気がする。。。
+  
 
   // This definition and `formatAbs` are very similar..
   private def formatFactorial(n: Int) = {
@@ -116,6 +128,7 @@ object TestFib {
     println("fib     : %s".format(getSixResults(fib)))
     println("fib2    : %s".format(getSixResults(fib2)))
     println("fib3    : %s".format(getSixResults(fib3)))
+    println("fibAns  : %s".format(getSixResults(fib3)))
   }
 
   def getSixResults(f: Int=>Int): String = {
