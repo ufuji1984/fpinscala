@@ -48,6 +48,35 @@ object MyModule {
     go(n)
   }
 
+  // tailrec version.
+  def fib2(n: Int): Int =  {
+
+    @annotation.tailrec
+    def go(n: Int, cnt: Int, latest: Int, previous:Int): Int =
+      if (n<=0) 0
+      else {
+        if (cnt >= n) latest
+        else go(n, cnt+1, latest+previous, latest)
+      }
+
+
+    go(n, 1, 1/*latest*/, 0/*previous*/)
+  }
+
+  // tailrec more sophisticated(?) version.
+  def fib3(n: Int): Int =  {
+
+    @annotation.tailrec
+    def go(n: Int, cnt: Int, latest: Int, previous:Int): Int =
+      // TODO throw Exception if n<=1
+      if (cnt >= n) latest
+      else go(n, cnt+1, latest+previous, latest)
+
+    if (n<=0) 0
+    else if (n == 1) 1
+    else go(n, 1, 1/*latest*/, 0/*previous*/)
+  }
+
 
   // This definition and `formatAbs` are very similar..
   private def formatFactorial(n: Int) = {
@@ -82,7 +111,15 @@ object TestFib {
   // test implementation of `fib`
   def main(args: Array[String]): Unit = {
     println("Expected: 0, 1, 1, 2, 3, 5, 8")
-    println("Actual:   %d, %d, %d, %d, %d, %d, %d".format(fib(0), fib(1), fib(2), fib(3), fib(4), fib(5), fib(6)))
+
+    //println("Actual:   %d, %d, %d, %d, %d, %d, %d".format(fib(0), fib(1), fib(2), fib(3), fib(4), fib(5), fib(6)))
+    println("fib     : %s".format(getSixResults(fib)))
+    println("fib2    : %s".format(getSixResults(fib2)))
+    println("fib3    : %s".format(getSixResults(fib3)))
+  }
+
+  def getSixResults(f: Int=>Int): String = {
+    "%d, %d, %d, %d, %d, %d, %d".format(f(0), f(1), f(2), f(3), f(4), f(5), f(6))
   }
 }
 
