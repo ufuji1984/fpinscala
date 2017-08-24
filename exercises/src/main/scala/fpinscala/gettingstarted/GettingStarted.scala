@@ -179,6 +179,34 @@ object MonomorphicBinarySearch {
 
 }
 
+
+
+object TestSorted {
+
+  import PolymorphicFunctions._
+
+  // test implementation of `isSorted`
+  def main(args: Array[String]): Unit = {
+
+    testInts(Array(1,2,3))
+    testInts(Array(1,3,2))
+
+  }
+
+  def testInts(as: Array[Int]): Unit = {
+
+    def func(a: Int, b: Int): Boolean = {
+      return (a <= b)
+    }
+    
+    val msg = "isSorted(%s) is %b"
+    println(msg.format(as, isSorted(as, func))) // TODO Want to see values of as.
+
+  }
+}
+
+
+
 object PolymorphicFunctions {
 
   // Here's a polymorphic version of `binarySearch`, parameterized on
@@ -201,7 +229,21 @@ object PolymorphicFunctions {
 
   // Exercise 2: Implement a polymorphic function to check whether
   // an `Array[A]` is sorted
-  def isSorted[A](as: Array[A], gt: (A,A) => Boolean): Boolean = ???
+  def isSorted[A](as: Array[A], gt: (A,A) => Boolean): Boolean = {
+
+    @annotation.tailrec
+    def go[A](arr: Array[A], gt: (A,A) => Boolean, idx: Int): Boolean = {
+      if (idx >= arr.length -1) true
+      else {
+        if (gt(arr(idx), arr(idx+1))) go(arr, gt, idx+1)
+        else false
+      }
+    }
+
+    go(as, gt, 0)
+  }
+
+
 
   // Polymorphic functions are often so constrained by their type
   // that they only have one implementation! Here's an example:
