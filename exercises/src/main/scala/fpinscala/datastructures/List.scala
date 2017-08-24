@@ -86,7 +86,17 @@ object List { // `List` companion object. Contains functions for creating and wo
     }
   // 模範解答と一致した。
 
-  def drop[A](l: List[A], n: Int): List[A] = ???
+  // Exercise 3.4
+  def drop[A](l: List[A], n: Int): List[A] =
+    {
+      @annotation.tailrec
+      def go(lNow: List[A], doneCnt: Int): List[A] = {
+        if (doneCnt >= n) lNow
+        else go(tail(lNow), doneCnt+1)
+      }
+
+      go(l, 0)
+    }
 
   def dropWhile[A](l: List[A], f: A => Boolean): List[A] = ???
 
