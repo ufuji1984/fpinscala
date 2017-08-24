@@ -83,12 +83,12 @@ object MyModule {
   def fibAns(n: Int): Int = {
     @annotation.tailrec
     def loop(n: Int, prev: Int, cur: Int): Int =
-      if (n == 0) prev 
+      if (n == 0) prev
       else loop(n - 1, cur, prev + cur)
     loop(n, 0, 1)
   }
   // 確かにif分岐が少なくて記述がスッキリしてるが、最後のcurrentは使わない＝１つ分余計に計算してる気がする。。。
-  
+
 
   // This definition and `formatAbs` are very similar..
   private def formatFactorial(n: Int) = {
@@ -198,9 +198,12 @@ object TestSorted {
     def func(a: Int, b: Int): Boolean = {
       return (a <= b)
     }
-    
-    val msg = "isSorted(%s) is %b"
-    println(msg.format(as, isSorted(as, func))) // TODO Want to see values of as.
+
+    val msg = "isSorted%d(%s) is %b"
+    println(msg.format(1, as, isSorted(as, func))) // TODO Want to see values of as.
+    println(msg.format(2, as, isSorted2(as, func)))
+
+    println(msg.format(9, as, isSorted9(as, func)))
 
   }
 }
@@ -241,6 +244,32 @@ object PolymorphicFunctions {
     }
 
     go(as, gt, 0)
+  }
+
+  // Official answer を受けて改善。
+  // 自分の回答は、不要な引数（そのまま受け渡しているだけ）が２つあった。
+  def isSorted2[A](as: Array[A], gt: (A,A) => Boolean): Boolean = {
+
+    @annotation.tailrec
+    def go(n: Int): Boolean = {
+      if (n >= as.length -1) true
+      else if (gt(as(n), as(n+1))) go(n+1)
+      else false
+    }
+
+    go(0)
+  }
+
+  // Official answer
+  // gtの想定が逆っぽい
+  def isSorted9[A](as: Array[A], gt: (A,A) => Boolean): Boolean = {
+    @annotation.tailrec
+    def go(n: Int): Boolean =
+      if (n >= as.length-1) true
+      else if (gt(as(n), as(n+1))) false
+      else go(n+1)
+
+    go(0)
   }
 
 
