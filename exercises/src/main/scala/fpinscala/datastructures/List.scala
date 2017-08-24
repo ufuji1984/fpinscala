@@ -78,7 +78,13 @@ object List { // `List` companion object. Contains functions for creating and wo
     }
 
 
-  def setHead[A](l: List[A], h: A): List[A] = ???
+  // Exercise 3.3
+  def setHead[A](l: List[A], h: A): List[A] =
+    l match {
+      case Nil => sys.error("setHead of empty list")
+      case Cons(_, t) => Cons(h, t)
+    }
+  // 模範解答と一致した。
 
   def drop[A](l: List[A], n: Int): List[A] = ???
 
