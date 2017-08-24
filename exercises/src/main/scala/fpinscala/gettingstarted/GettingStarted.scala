@@ -315,5 +315,6 @@ object PolymorphicFunctions {
   // Exercise 5: Implement `compose`
 
   def compose[A,B,C](f: B => C, g: A => B): A => C =
-    ???
+    a => f(g(a))
+  // 模範解答と一致した。掴めてきた気がする。。。
 }
