@@ -284,10 +284,18 @@ object PolymorphicFunctions {
 
   // Note that `=>` associates to the right, so we could
   // write the return type as `A => B => C`
-  def curry[A,B,C](f: (A, B) => C): A => (B => C) =
-    ???
-
+  def curry_mine[A,B,C](f: (A,B) => C): A => (B => C) = {
+    (a:A) => ((b:B) => f(a, b))
+  }
   // NB: The `Function2` trait has a `curried` method already
+
+  /* Note that `=>` associates to the right, so we could write the return type as
+     `A => B => C` */
+  def curry_officialAnswer[A,B,C](f: (A, B) => C): A => (B => C) =
+    a => b => f(a, b)
+  // Scalaが型を推定できるのでここまで省略できるっぽい（「一般的には省略します」@Ex2.3直前）
+  /* NB: The `Function2` trait has a `curried` method already, so if you wanted to
+     cheat a little you could write the answer as f.curried */
 
   // Exercise 4: Implement `uncurry`
   def uncurry[A,B,C](f: A => B => C): (A, B) => C =
