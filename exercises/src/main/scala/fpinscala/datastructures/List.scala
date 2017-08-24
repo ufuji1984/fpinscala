@@ -97,6 +97,8 @@ object List { // `List` companion object. Contains functions for creating and wo
 
       go(l, 0)
     }
+  // 模範解答は tail も helper method も使わずに自身を再帰で呼んでいる。
+
 
   def dropWhile[A](l: List[A], f: A => Boolean): List[A] = ???
 
