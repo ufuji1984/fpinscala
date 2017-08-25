@@ -102,12 +102,32 @@ object List { // `List` companion object. Contains functions for creating and wo
     if (n < 0)  sys.error("n < 0 for drop") // 模範解答ではlを返してる
     else if (n == 0) l
     else l match {
-      case Nil => sys.error("drop on empty list") // 模範解答ではNilを返してるがtailの説明を見ると例外のがよさげ
+      case Nil => Nil // tailの説明を見ると初回なら例外のがよさげだが、再帰で呼ばれた場合はNilを返すのが正しい
       case Cons(_, t) => drop(t, n-1)
     }
 
 
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = ???
+  // Exercise 3.5
+  /*
+  Somewhat overkill, but to illustrate the feature we're using a _pattern guard_,
+  to only match a `Cons` whose head satisfies our predicate, `f`.
+  The syntax is to add `if <cond>` after the pattern, before the `=>`,
+  where `<cond>` can use any of the variables introduced by the pattern.
+  */
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] =
+    l match {
+      case Cons(h,t) if f(h) => dropWhile(t, f)
+      case _ => l // _ は任意の式とマッチする特殊なパターン
+    }
+
+  def dropWhile_mine[A](l: List[A], f: A => Boolean): List[A] =
+    l match {
+      case Nil => Nil
+      case Cons(h, t) => {
+        if (f(h)) dropWhile(t, f)
+        else l
+      }
+    }
 
   def init[A](l: List[A]): List[A] = ???
 
