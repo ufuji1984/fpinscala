@@ -87,7 +87,7 @@ object List { // `List` companion object. Contains functions for creating and wo
   // 模範解答と一致した。
 
   // Exercise 3.4
-  def drop[A](l: List[A], n: Int): List[A] =
+  def drop_myAnswer[A](l: List[A], n: Int): List[A] =
     {
       @annotation.tailrec
       def go(lNow: List[A], doneCnt: Int): List[A] = {
@@ -98,6 +98,13 @@ object List { // `List` companion object. Contains functions for creating and wo
       go(l, 0)
     }
   // 模範解答は tail も helper method も使わずに自身を再帰で呼んでいる。
+  def drop[A](l: List[A], n: Int): List[A] =
+    if (n < 0)  sys.error("n < 0 for drop") // 模範解答ではlを返してる
+    else if (n == 0) l
+    else l match {
+      case Nil => sys.error("drop on empty list") // 模範解答ではNilを返してるがtailの説明を見ると例外のがよさげ
+      case Cons(_, t) => drop(t, n-1)
+    }
 
 
   def dropWhile[A](l: List[A], f: A => Boolean): List[A] = ???
