@@ -129,7 +129,25 @@ object List { // `List` companion object. Contains functions for creating and wo
       }
     }
 
-  def init[A](l: List[A]): List[A] = ???
+  // Exercise 3.6
+  def init_mine[A](l: List[A]): List[A] =
+    l match {
+      Nil => sys.error("init on Nil")
+      Cons(h, t) => {
+        t match {
+          Nil => Nil //Cons(h, Nil)
+          _ => Cons(h, init(t))
+        }
+      }
+    }
+
+  // Official1 ↑よりスッキリ（↑は無駄にmatchをネストしている）
+  def init[A](l: List[A]): List[A] =
+    l match {
+      case Nil => sys.error("init of empty list")
+      case Cons(_,Nil) => Nil
+      case Cons(h,t) => Cons(h,init(t))
+    }
 
   def length[A](l: List[A]): Int = ???
 
