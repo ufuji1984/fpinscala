@@ -213,11 +213,54 @@ object List { // `List` companion object. Contains functions for creating and wo
   }
 
   def reverse[A](l: List[A]): List[A] =
-    foldLeft(l, Nil)((acc, h) => Cons(h, acc))
-  // foldLeft(l, List[A]())((acc,h) => Cons(h,acc))
-  // が模範解答。
-  // ※16と同じく、Scalaの型推定を補助する必要がありそう。Nil: List[A] ならOKかも？
+    //foldLeft(l, Nil)((acc, h) => Cons(h, acc))
 
+    // foldLeft(l, List[A]())((acc,h) => Cons(h,acc))
+    // が模範解答。
+    // ※16と同じく、Scalaの型推定を補助する必要がありそう。Nil: List[A] ならOKかも？
+    foldLeft(l, Nil: List[A] )((acc, h) => Cons(h, acc))
+
+  // Ex. 3.13
+
+  /*
+  def foldLeft_byFoldRight[A,Z](l: List[A], z: Z) (f: (Z, A) => Z): Z =
+    {
+      //val wkF = foldRight( reverse_notUsingFoldLeft(l), z )
+      //wkF(revFunc2(f))
+
+      //foldRight( reverse_notUsingFoldLeft(l), z )(revFunc2(f))
+      ↓
+      required: (Z, Z) => Z
+      と言われてしまう。
+
+      //val reversedF = reverseFunc2(f)
+      val reversedF = passFunc2(f)
+      foldRight( reverse_notUsingFoldLeft(l), z )(reversedF)
+
+      //foldRight( reverse_notUsingFoldLeft(l), z )(f)//test
+    }
+  */
+
+  def foldRight_byFoldLeft[A,B](l: List[A], z: B)(f: (A, B) => B): B =
+
+    foldLeft(reverse(l), z)(reverseFunc2(f))
+
+    //foldLeft(reverse(l), z)( (b,a) => f(a,b) ) // Official
+    //foldLeft(reverse(l), z)(reverseFunc2_withC(f)) // これでもビルド通る
+
+  /**
+  2引数関数の引数順を入れ替える
+  */
+  def reverseFunc2[X,Y](f: (X, Y) => Y): (Y, X) => Y =
+  //def reverseFunc2[X](f: (X, X) => X): (X, X) => X =
+    (y, x) => f(x, y)
+    //(b:B, a:A) => f(a, b)
+
+  // ↓模範解答を素直に関数化したもの。確かに戻り値は任意だな。
+  def reverseFunc2_withC[X,Y,Z](f: (X, Y) => Z): (Y, X) => Z =
+  //def reverseFunc2[X](f: (X, X) => X): (X, X) => X =
+    (y, x) => f(x, y)
+    //(b:B, a:A) => f(a, b)
 
 
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
