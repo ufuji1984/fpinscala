@@ -284,7 +284,26 @@ object List { // `List` companion object. Contains functions for creating and wo
 
 
   // Ex. 3.15
-  def concat[A](l: List[List[A]]): List[A] = ???
+  /*
+  def concat[A](l: List[List[A]]): List[A] = {
+
+    @annotation.tailrec
+    def go(m: List[List[A]], acc: List[A]): List[A] = m match {
+        case Nil => acc
+        case Cons(h, t) => go(t, appendViaFoldRight(h, acc))
+      }
+
+    go(l, Nil)
+
+  }
+  */
+
+  def concat[A](l: List[List[A]]): List[A] =
+    //def foldRight[X,Y](as: List[X], z: Y)(f: (X, Y) => Y): Y
+    // X=List[A]
+    // Y=List[A]
+    // foldRight(l: List[List[A]], z: List[A])(f: (List[A], List[A]) => List[A]): List[A]
+    foldRight(l, List[A]())(append) // TODO 手動展開
 
 
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
