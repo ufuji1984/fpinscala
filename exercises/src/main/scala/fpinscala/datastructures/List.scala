@@ -132,11 +132,11 @@ object List { // `List` companion object. Contains functions for creating and wo
   // Exercise 3.6
   def init_mine[A](l: List[A]): List[A] =
     l match {
-      Nil => sys.error("init on Nil")
-      Cons(h, t) => {
+      case Nil => sys.error("init on Nil")
+      case Cons(h, t) => {
         t match {
-          Nil => Nil //Cons(h, Nil)
-          _ => Cons(h, init(t))
+          case Nil => Nil //Cons(h, Nil)
+          case _ => Cons(h, init(t))
         }
       }
     }
@@ -149,6 +149,16 @@ object List { // `List` companion object. Contains functions for creating and wo
       case Cons(h,t) => Cons(h,init(t))
     }
 
+  // Exercise 3.7
+  // この形なら短絡可能？
+  def foldRight_withStopper[A,B](as: List[A], z: B, stopByZ: Boolean)(f: (A, B) => B): B =
+    as match {
+      case Nil => z
+      case Cons(x, xs) if (x==z) => z // xとzは型が違うけどコンパイルはできるな。。。
+      case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+    }
+
+  // Exercise 3.9
   def length[A](l: List[A]): Int = ???
 
   def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = ???
