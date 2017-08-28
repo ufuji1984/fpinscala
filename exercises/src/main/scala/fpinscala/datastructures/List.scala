@@ -190,9 +190,12 @@ object List { // `List` companion object. Contains functions for creating and wo
     foldLeft(ns, 0)(_ + _)
 
   def product_byFoldLeft(ns: List[Double]) =
-    //foldRight(ns, 1.0)(_ * _) // `_ * _` is more concise notation for `(x,y) => x * y`; see sidebar
+    //foldRight(ns, 1.0)(_ * _)
     foldLeft(ns, 1.0)(_ * _)
 
+  def length_byFoldLeft[A](l: List[A]): Int =
+    //foldRight(l, 0)((_,acc) => acc + 1)
+    foldLeft(l, 0)((acc,_) => acc + 1)
 
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
 }
