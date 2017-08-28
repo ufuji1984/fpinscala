@@ -160,7 +160,8 @@ object List { // `List` companion object. Contains functions for creating and wo
 
   // Exercise 3.9
   def length[A](l: List[A]): Int =
-    foldRight(l, 0)((x,y) => 1)
+    //これでは常に1になってしまう foldRight(l, 0)((x,y) => 1)
+    foldRight(l, 0)((_,acc) => acc + 1) // official answer
 
   def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = ???
 
