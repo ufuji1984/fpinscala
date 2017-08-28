@@ -197,5 +197,28 @@ object List { // `List` companion object. Contains functions for creating and wo
     //foldRight(l, 0)((_,acc) => acc + 1)
     foldLeft(l, 0)((acc,_) => acc + 1)
 
+
+
+  // Ex. 3.12
+  def reverse_notUsingFoldLeft[A](l: List[A]): List[A] = {
+
+    @annotation.tailrec
+    def go(remaining: List[A], reversed: List[A]): List[A] =
+      remaining match {
+        case Nil => reversed
+        case Cons(h, t) => go(t, Cons(h, reversed))
+      }
+
+    go(l, Nil)
+  }
+
+  def reverse[A](l: List[A]): List[A] =
+    foldLeft(l, Nil)((acc, h) => Cons(h, acc))
+  // foldLeft(l, List[A]())((acc,h) => Cons(h,acc))
+  // が模範解答。
+  // ※16と同じく、Scalaの型推定を補助する必要がありそう。Nil: List[A] ならOKかも？
+
+
+
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
 }
