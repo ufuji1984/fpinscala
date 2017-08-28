@@ -37,6 +37,8 @@ object List { // `List` companion object. Contains functions for creating and wo
       case Cons(h,t) => Cons(h, append(t, a2))
     }
 
+  // @annotation.tailrec をつけると怒られるので確かにtailrecではない（Ex.3.10）
+  // たしかにfoldRightした後でfに喰わせている。
   def foldRight[A,B](as: List[A], z: B)(f: (A, B) => B): B = // Utility functions
     as match {
       case Nil => z
@@ -163,7 +165,24 @@ object List { // `List` companion object. Contains functions for creating and wo
     //これでは常に1になってしまう foldRight(l, 0)((x,y) => 1)
     foldRight(l, 0)((_,acc) => acc + 1) // official answer
 
-  def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = ???
+
+  // Exercise 3.10
+
+  // 参考 def foldRight
+  //          [A,B](l: List[A], z: B)(f: (A, B) => B): B
+  //as match {
+  //  case Nil => z
+  //  case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+  //}
+
+  @annotation.tailrec
+  def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B =
+    l match {
+      case Nil => z
+      //mine case
+      //   Cons(h,t) => f( foldLeft(t, z)(f) , h ))
+      case Cons(h,t) => foldLeft(t, f(z,h))(f) //official
+    }
 
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
 }
