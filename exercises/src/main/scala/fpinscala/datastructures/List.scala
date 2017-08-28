@@ -263,5 +263,25 @@ object List { // `List` companion object. Contains functions for creating and wo
     //(b:B, a:A) => f(a, b)
 
 
+
+  // Ex. 3.14
+  /* 参考（再掲）
+  def append[A](a1: List[A], a2: List[A]): List[A] =
+    a1 match {
+      case Nil => a2
+      case Cons(h,t) => Cons(h, append(t, a2))
+    }
+  */
+  def appendViaFoldLeft[A](a1: List[A], a2: List[A]): List[A] =
+    foldLeft( reverse(a1), a2)( (t, h) => Cons(h, t) )
+
+  def appendViaFoldRight_mine[A](a1: List[A], a2: List[A]): List[A] =
+    foldRight(a1, a2)( (h,t) => Cons(h,t) )
+
+  // Officialはより簡潔
+  def appendViaFoldRight[A](l: List[A], r: List[A]): List[A] =
+    foldRight(l, r)(Cons(_,_))
+
+
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
 }
