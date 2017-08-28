@@ -184,5 +184,15 @@ object List { // `List` companion object. Contains functions for creating and wo
       case Cons(h,t) => foldLeft(t, f(z,h))(f) //official
     }
 
+  // Exercise 3.11
+  def sum_byFoldLeft(ns: List[Int]) =
+    //foldRight(ns, 0)((x,y) => x + y)
+    foldLeft(ns, 0)(_ + _)
+
+  def product_byFoldLeft(ns: List[Double]) =
+    //foldRight(ns, 1.0)(_ * _) // `_ * _` is more concise notation for `(x,y) => x * y`; see sidebar
+    foldLeft(ns, 1.0)(_ * _)
+
+
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
 }
