@@ -283,5 +283,9 @@ object List { // `List` companion object. Contains functions for creating and wo
     foldRight(l, r)(Cons(_,_))
 
 
+  // Ex. 3.15
+  def concat[A](l: List[List[A]]): List[A] = ???
+
+
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
 }
