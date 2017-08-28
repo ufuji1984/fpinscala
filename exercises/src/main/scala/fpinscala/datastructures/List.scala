@@ -303,7 +303,16 @@ object List { // `List` companion object. Contains functions for creating and wo
     // X=List[A]
     // Y=List[A]
     // foldRight(l: List[List[A]], z: List[A])(f: (List[A], List[A]) => List[A]): List[A]
-    foldRight(l, List[A]())(append) // TODO 手動展開
+    foldRight(l, List[A]())(append)
+
+  // ↓ 手動展開
+  // concat(List(l1, l2, l3))
+  // foldRight(List(l1, l2, l3), List[A]() )(append)
+  // append(l1, foldRight(List(l2, l3), Nil)(append))
+  // append(l1, append(l2, foldRight(List(l3, Nil), Nil)(append)))
+  // append(l1, append(l2, append(l3, foldRight(Nil, Nil)(append))))
+  // append(l1, append(l2, append(l3, Nil)))
+
 
 
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
