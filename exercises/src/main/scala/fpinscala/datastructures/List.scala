@@ -313,6 +313,10 @@ object List { // `List` companion object. Contains functions for creating and wo
   // append(l1, append(l2, append(l3, foldRight(Nil, Nil)(append))))
   // append(l1, append(l2, append(l3, Nil)))
 
+  // Ex. 3.16
+  def addOneToEach(l: List[Int]): List[Int] =
+    foldRight(l, List[Int]())((h, t) => Cons(h+1, t))
+    // OfficialはNil:List[Int]だがこの２つには差があるのか？
 
 
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
