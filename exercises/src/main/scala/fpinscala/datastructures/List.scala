@@ -331,5 +331,17 @@ object List { // `List` companion object. Contains functions for creating and wo
   // X = A
   // Y = List[B]
 
+  // Ex. 3.19
+  def filter_myAnswer[A](as: List[A])(f: A => Boolean): List[A] = {
+    def consIfF(h: A, t: List[A]) = {
+      if (f(h)) Cons(h, t)
+      else t
+    }
+    foldRight(as, Nil: List[A])(consIfF)
+  }
+  // officialは無名関数で１行
+  def filter[A](l: List[A])(f: A => Boolean): List[A] =
+    foldRight(l, Nil:List[A])((h,t) => if (f(h)) Cons(h,t) else t)
+
 
 }
