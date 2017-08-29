@@ -327,7 +327,7 @@ object List { // `List` companion object. Contains functions for creating and wo
   def map[A,B](l: List[A])(f: A => B): List[B] =
     foldRight(l, Nil:List[B])( (h, t) => Cons(f(h), t))
   // 参考：foldRight[X,Y](r: List[X], y: Y)(f: (X, Y) => Y): Y
-  //      f(r1, f(r2, ... f(rMax, y)))
+  //      f(r1, f(r2, ... f(rMax, y)...))
   // X = A
   // Y = List[B]
 
