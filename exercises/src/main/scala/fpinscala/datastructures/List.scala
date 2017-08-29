@@ -318,6 +318,11 @@ object List { // `List` companion object. Contains functions for creating and wo
     foldRight(l, List[Int]())((h, t) => Cons(h+1, t))
     // OfficialはNil:List[Int]だがこの２つには差があるのか？
 
+  // Ex. 3.17
+  def eachToStr(l: List[Double]): List[String] =
+    foldRight(l, Nil:List[String])((h, t) => Cons(h.toString, t))
+  // 参考：foldRight[A,B](l: List[A], z: B)(f: (A, B) => B): B
+
 
   def map[A,B](l: List[A])(f: A => B): List[B] = ???
 }
