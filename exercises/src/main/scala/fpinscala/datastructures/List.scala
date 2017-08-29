@@ -345,7 +345,7 @@ object List { // `List` companion object. Contains functions for creating and wo
 
 
   // Ex. 3.20
-  def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] =
+  def flatMap_mine[A,B](as: List[A])(f: A => List[B]): List[B] =
     foldRight(as, Nil:List[B])((h, t) => append(f(h), t))
   // Official。TODO 式を展開して同じになるか確認したい。
   def flatMap[A,B](l: List[A])(f: A => List[B]): List[B] =
@@ -355,5 +355,39 @@ object List { // `List` companion object. Contains functions for creating and wo
   // Ex. 3.21
   def filterViaFlatMap[A](l: List[A])(f: A => Boolean): List[A] =
     flatMap(l)( a => if (f(a)) List(a) else Nil )
+
+
+  // Ex. 3.22
+  def addPairwise_mine(a: List[Int], b: List[Int]): List[Int] = {
+
+    def loop(aTail: List[Int], bTail: List[Int], zipped: List[Int]): List[Int] = aTail match {
+      case Nil => append(zipped, bTail)
+      case Cons(ah, at) => {
+        bTail match {
+          case Nil => append(zipped, aTail)
+          case Cons(bh, bt) => loop(at, bt, Cons(ah + bh, zipped))
+        }
+      }
+    }
+
+    loop(a, b, Nil)
+  }
+
+  /*
+  Official
+
+  To match on multiple values, we can put the values into a pair and match on the
+  pair, as shown next, and the same syntax extends to matching on N values (see
+  sidebar "Pairs and tuples in Scala" for more about pair and tuple objects).
+
+  ※ 片方がNilなら足した結果もNilというルールで書いている。
+  */
+  def addPairwise(a: List[Int], b: List[Int]): List[Int] = (a,b) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (Cons(h1,t1), Cons(h2,t2)) => Cons(h1+h2, addPairwise(t1,t2))
+  }
+
+
 
 }
