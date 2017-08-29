@@ -344,4 +344,11 @@ object List { // `List` companion object. Contains functions for creating and wo
     foldRight(l, Nil:List[A])((h,t) => if (f(h)) Cons(h,t) else t)
 
 
+  // Ex. 3.20
+  def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] =
+    foldRight(as, Nil:List[B])((h, t) => append(f(h), t))
+  // Official。TODO 式を展開して同じになるか確認したい。
+  def flatMap[A,B](l: List[A])(f: A => List[B]): List[B] =
+    concat(map(l)(f))
+
 }
