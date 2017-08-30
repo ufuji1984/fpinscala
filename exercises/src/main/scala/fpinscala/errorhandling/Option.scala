@@ -1,16 +1,32 @@
 package fpinscala.errorhandling
 
-
-import scala.{Option => _, Some => _, Either => _, _} // hide std library `Option`, `Some` and `Either`, since we are writing our own in this chapter
+// hide std library `Option`, `Some` and `Either`,
+// since we are writing our own in this chapter
+import scala.{Option => _, Some => _, Either => _, _}
 
 sealed trait Option[+A] {
-  def map[B](f: A => B): Option[B] = ???
 
-  def getOrElse[B>:A](default: => B): B = ???
+  def map[B](f: A => B): Option[B] = this match{
+    case None => None
+    case Some(a) => Some(f(a))
+  }
 
-  def flatMap[B](f: A => Option[B]): Option[B] = ???
+  def getOrElse[B>:A](default: => B): B = this match{
+    case None => default
+    case Some(a) => a
+  }
 
-  def orElse[B>:A](ob: => Option[B]): Option[B] = ???
+  def flatMap[B](f: A => Option[B]): Option[B] =
+    map(f).getOrElse(None)
+
+
+  def orElse_mine_usingPatternMatching[B>:A](ob: => Option[B]): Option[B] = this match{
+    case None => ob
+    case _ => this
+  }
+  // Official
+  def orElse[B>:A](ob: => Option[B]): Option[B] =
+    this map (Some(_)) getOrElse ob
 
   def filter(f: A => Boolean): Option[A] = ???
 }
