@@ -76,8 +76,11 @@ object Tree {
   def depthViaFold[A](t: Tree[A]): Int =
     fold(t)( _ => 0 )( (l, r) => 1 + ( l max r ) )
 
-  def mapViaFold[X, Y](t: Tree[X])(h: X => Y): Tree[Y] =
+  def mapViaFold_mine[X, Y](t: Tree[X])(h: X => Y): Tree[Y] =
     fold(t)( a => Leaf(h(a)): Tree[Y] )( (l, r) => Branch( l , r ) )
 
+  // 最後の関数引数は無名引数で書ける
+  def mapViaFold[X, Y](t: Tree[X])(h: X => Y): Tree[Y] =
+    fold(t)( a => Leaf(h(a)): Tree[Y] )(Branch(_,_))
 
 }
