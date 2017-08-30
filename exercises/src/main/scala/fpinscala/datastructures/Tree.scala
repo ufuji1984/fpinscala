@@ -34,6 +34,29 @@ object Tree {
     case Branch(l,r) => maximum(l) max maximum(r)
   }
 
+  // Ex. 3.27
+  def depth_mine[A](t: Tree[A]): Int = {
+    def loop(u: Tree[A], acc: Int): Int = u match {
+      case Leaf(_) => acc+1 // officialの定義は「いきなりLeafのときは0」という数え方ぽいので、であれば+1は不要
+      case Branch(l, r) => loop(l, acc+1) max loop(r, acc+1)
+    }
+    loop(t, 0)
+  }
+  // Official
+  def depth[A](t: Tree[A]): Int = t match {
+    case Leaf(_) => 0
+    case Branch(l,r) => 1 + (depth(l) max depth(r))
+  }
 
+  // Ex. 3.28
+  def map_mine[A, B](t: Tree[A])(f: Tree[A] => Tree[B]): Tree[B] = t match {
+    case Leaf(_) => f(t)
+    case Branch(l,r) => Branch(map_mine(l)(f), map_mine(r)(f))
+  }
 
+  // Officialの方が簡潔
+  def map[A, B](t: Tree[A])(f: A => B): Tree[B] = t match {
+    case Leaf(a) => Leaf(f(a))
+    case Branch(l,r) => Branch(map(l)(f), map(r)(f))
+  }
 }
