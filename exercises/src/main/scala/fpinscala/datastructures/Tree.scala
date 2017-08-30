@@ -7,7 +7,24 @@ case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 
 object Tree {
 
+  // Ex. 3.25
 
+  def size_mine[A](t: Tree[A]): Int = {
 
+    // TODO tailrecにしたい
+    def loop(u: Tree[A], acc: Int): Int = u match {
+      case Leaf(_) => acc+1
+      case Branch(l, r) => loop(l, acc+1) + loop(r, 0)
+    }
+
+    loop(t, 0)
+
+  }
+
+  // official
+  def size[A](t: Tree[A]): Int = t match {
+    case Leaf(_) => 1
+    case Branch(l,r) => 1 + size(l) + size(r)
+  }
 
 }
