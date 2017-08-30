@@ -21,10 +21,12 @@ object Tree {
 
   }
 
-  // official
+  // official の方が簡潔だし、左右対称でキレイ
   def size[A](t: Tree[A]): Int = t match {
     case Leaf(_) => 1
     case Branch(l,r) => 1 + size(l) + size(r)
   }
+
+
 
 }
