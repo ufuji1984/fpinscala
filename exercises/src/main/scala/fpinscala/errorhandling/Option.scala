@@ -82,6 +82,7 @@ object Option {
     a flatMap (aa => b map (bb => f(aa, bb)))
 
   // Ex. 4.4
+  /* warning出るのでCO
   def sequence_mine[A](a: List[Option[A]]): Option[List[A]] =
     a match {
       case h :: t => {
@@ -91,6 +92,7 @@ object Option {
     }
     case _ => None // case None :: _ or Nil or None
   }
+  */
   /*
   Here's an explicit recursive version:
   Optionの皮をむいてから処理したいなら
@@ -119,5 +121,12 @@ object Option {
     a.foldRight(Some(Nil):Option[List[A]])((x,y) => map2(x,y)(_ :: _))
 
 
-  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = ???
+  // Ex. 4.5
+  // TODO 答え合わせ
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
+    a match {
+      case Nil => Some(Nil)
+      case h :: t => f(h) flatMap (b => (traverse(t)(f) map (lb => b :: lb)))
+    }
+
 }
