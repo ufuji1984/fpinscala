@@ -123,10 +123,16 @@ object Option {
 
   // Ex. 4.5
   // TODO 答え合わせ
-  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
+  def traverse_mine[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
     a match {
       case Nil => Some(Nil)
       case h :: t => f(h) flatMap (b => (traverse(t)(f) map (lb => b :: lb)))
+      // ↑はmap2と同じことなので↓のように書ける
     }
 
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
+    a match {
+      case Nil => Some(Nil)
+      case h :: t => map2(f(h), traverse(t)(f))(_ :: _)
+    }
 }
