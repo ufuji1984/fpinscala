@@ -75,12 +75,24 @@ object Option {
 
   // Official answer.
   // curryingするという点は合ってた模様。
+  //
   // a bit later in the chapter we'll learn nicer syntax for
   // writing functions like this
   def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
     a flatMap (aa => b map (bb => f(aa, bb)))
 
-  def sequence[A](a: List[Option[A]]): Option[List[A]] = ???
+  // Ex. 4.4
+  // ビルドは通った。TODO答え合わせ
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = a match {
+    case List(None, _) => None
+    case List(h, t) => {
+      (h, t) match {
+        case (Some(hh), Some(tt)) => Some(List(hh, tt))
+        case _ => None
+      }
+    }
+    case _ => None // case Nil or None
+  }
 
   def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = ???
 }
