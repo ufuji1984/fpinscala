@@ -82,17 +82,42 @@ object Option {
     a flatMap (aa => b map (bb => f(aa, bb)))
 
   // Ex. 4.4
-  // ビルドは通った。TODO答え合わせ
-  def sequence[A](a: List[Option[A]]): Option[List[A]] = a match {
-    case List(None, _) => None
-    case List(h, t) => {
-      (h, t) match {
-        case (Some(hh), Some(tt)) => Some(List(hh, tt))
-        case _ => None
-      }
+  def sequence_mine[A](a: List[Option[A]]): Option[List[A]] =
+    a match {
+      case h :: t => {
+        (h, sequence(t)) match {
+          case (Some(hh), Some(tt)) => Some(hh :: tt)
+        }
     }
-    case _ => None // case Nil or None
+    case _ => None // case None :: _ or Nil or None
   }
+  /*
+  Here's an explicit recursive version:
+  Optionの皮をむいてから処理したいなら
+  map（与える関数は A => B つまり失敗想定ナシ だが、
+      そこに入るaがNoneならNoneを返したいので、戻り値はOption）や
+  flatMap（与える関数は A => Option[B] 。map結果を右側に置きたいならこれになる）
+  を使えばよい
+  */
+  def sequence[A](a: List[Option[A]]): Option[List[A]] =
+    a match {
+      case Nil => Some(Nil)
+      case h :: t => h flatMap (hh => sequence(t) map (hh :: _))
+    }
+
+  /*
+  It can also be implemented using `foldRight` and `map2`.
+  The type annotation on `foldRight` is needed here;
+  otherwise Scala wrongly infers the result type of the fold
+  as `Some[Nil.type]` and reports a type error (try it!).
+
+  This is an unfortunate consequence of Scala using subtyping
+  to encode algebraic data types.
+  */
+  def sequence_1[A](a: List[Option[A]]): Option[List[A]] =
+    // a.foldRight(Some(Nil))((x,y) => map2(x,y)(_ :: _)) // > try it!
+    a.foldRight(Some(Nil):Option[List[A]])((x,y) => map2(x,y)(_ :: _))
+
 
   def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = ???
 }
