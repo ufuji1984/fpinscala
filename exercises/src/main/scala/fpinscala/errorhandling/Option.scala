@@ -69,8 +69,16 @@ object Option {
     mean(xs) flatMap (m => mean(xs.map(x => math.pow(x - m, 2))))
 
 
-  // Ex. 4.3 TODO
-  def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = ???
+  // Ex. 4.3
+  //def map2_mine[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
+  //  a.map(a => (b: Option[B] => f(a, b)) )(b) // compile error
+
+  // Official answer.
+  // curryingするという点は合ってた模様。
+  // a bit later in the chapter we'll learn nicer syntax for
+  // writing functions like this
+  def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
+    a flatMap (aa => b map (bb => f(aa, bb)))
 
   def sequence[A](a: List[Option[A]]): Option[List[A]] = ???
 
