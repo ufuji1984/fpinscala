@@ -11,6 +11,17 @@ trait Stream[+A] {
     case _ => List() //mine Nil
   }
 
+  // official tailrec answer
+  def toList: List[A] = {
+    @annotation.tailrec
+    def go(s: Stream[A], acc: List[A]): List[A] = s match {
+      case Cons(h,t) => go(t(), h() :: acc)
+      case _ => acc
+    }
+    go(this, List()).reverse
+  }
+
+
   def foldRight[B](z: => B)(f: (A, => B) => B): B = // The arrow `=>` in front of the argument type `B` means that the function `f` takes its second argument by name and may choose not to evaluate it.
     this match {
       case Cons(h,t) => f(h(), t().foldRight(z)(f)) // If `f` doesn't evaluate its second argument, the recursion never occurs.
