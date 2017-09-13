@@ -14,5 +14,6 @@ errors--can you see why?). This idea can even be generalized further--we don't
 need to accumulate failing values into a list; we can accumulate values using
 any user-supplied binary function.
 
-It's also possible to use `Either[List[E],_]` directly to accumulate errors, using different implementations of helper functions like `map2` and `sequence`.
+It's also possible to use `Either[List[E],_]` directly to accumulate errors,
+using different implementations of helper functions like `map2` and `sequence`.
 */
