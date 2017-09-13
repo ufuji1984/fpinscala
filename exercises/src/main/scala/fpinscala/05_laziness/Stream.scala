@@ -44,7 +44,7 @@ trait Stream[+A] {
       if (nn <= 0) acc
       else acc match {
         case Cons(h, t) => go(nn-1, t)
-        
+        case 
       }
     }
   }
