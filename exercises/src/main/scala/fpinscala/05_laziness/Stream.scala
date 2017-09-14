@@ -39,14 +39,14 @@ trait Stream[+A] {
   def take(n: Int): Stream[A] = ???
 
   def drop(n: Int): Stream[A] = {
-
     def go(nn: Int, acc: => Stream[A]): Stream[A] = {
       if (nn <= 0) acc
       else acc match {
-        case Cons(h, t) => go(nn-1, t)
-        case 
+        case Cons(h, t) => go(nn-1, t())
+        case _ => throw new Exception("No element is left to drop.")
       }
     }
+    go(n, this)
   }
 
 
