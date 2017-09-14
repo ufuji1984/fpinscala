@@ -73,14 +73,22 @@ trait Stream[+A] {
     case _ => empty
   }
 
-  def foldRight[B](z: => B)(f: (A, => B) => B): B = // The arrow `=>` in front of the argument type `B` means that the function `f` takes its second argument by name and may choose not to evaluate it.
+  def foldRight[B](z: => B)(f: (A, => B) => B): B =
+    /*
+    The arrow `=>` in front of the argument type `B` means that the function `f` takes its second argument by name and
+    may choose not to evaluate it.
+     */
     this match {
       case Cons(h,t) => f(h(), t().foldRight(z)(f)) // If `f` doesn't evaluate its second argument, the recursion never occurs.
       case _ => z
     }
 
   def exists(p: A => Boolean): Boolean =
-    foldRight(false)((a, b) => p(a) || b) // Here `b` is the unevaluated recursive step that folds the tail of the stream. If `p(a)` returns `true`, `b` will never be evaluated and the computation terminates early.
+    foldRight(false)((a, b) => p(a) || b)
+    /*
+    Here `b` is the unevaluated recursive step that folds the tail of the stream.
+    If `p(a)` returns `true`, `b` will never be evaluated and the computation terminates early.
+    */
 
   /*
   Since `&&` is non-strict in its second argument, this terminates the traversal as soon as a nonmatching element is found.
@@ -241,7 +249,10 @@ object Stream {
     f(z).map((p: (A,S)) => cons(p._1,unfold(p._2)(f))).getOrElse(empty[A])
 
   /*
-  Scala provides shorter syntax when the first action of a function literal is to match on an expression.  The function passed to `unfold` in `fibsViaUnfold` is equivalent to `p => p match { case (f0,f1) => ... }`, but we avoid having to choose a name for `p`, only to pattern match on it.
+  Scala provides shorter syntax when the first action of a function literal is to match on an expression.
+  The function passed to `unfold` in `fibsViaUnfold` is equivalent to
+  `p => p match { case (f0,f1) => ... }`,
+  but we avoid having to choose a name for `p`, only to pattern match on it.
   */
   val fibsViaUnfold =
     unfold((0,1)) { case (f0,f1) => Some((f0,(f1,f0+f1))) }
