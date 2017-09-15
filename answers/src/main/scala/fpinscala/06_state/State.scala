@@ -27,6 +27,7 @@ object RNG {
     (if (i < 0) -(i + 1) else i, r)
   }
 
+  // Ex. 6.2
   // We generate an integer >= 0 and divide it by one higher than the
   // maximum. This is just one possible solution.
   def double(rng: RNG): (Double, RNG) = {
