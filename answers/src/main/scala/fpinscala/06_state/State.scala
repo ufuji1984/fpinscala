@@ -101,9 +101,13 @@ object RNG {
   val _double: Rand[Double] =
     map(nonNegativeInt)(_ / (Int.MaxValue.toDouble + 1))
 
+  // Ex. 6.6
+  //
   // This implementation of map2 passes the initial RNG to the first argument
   // and the resulting RNG to the second argument. It's not necessarily wrong
   // to do this the other way around, since the results are random anyway.
+  //
+  // 以下は良く分からん。`g`って何？`rb`のこと？？
   // We could even pass the initial RNG to both `f` and `g`, but that might
   // have unexpected results. E.g. if both arguments are `RNG.int` then we would
   // always get two of the same `Int` in the result. When implementing functions
