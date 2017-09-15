@@ -17,6 +17,7 @@ object RNG {
     }
   }
 
+  // Ex. 6.1
   // We need to be quite careful not to skew the generator.
   // Since `Int.Minvalue` is 1 smaller than `-(Int.MaxValue)`,
   // it suffices to increment the negative numbers by 1 and make them positive.
