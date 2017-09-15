@@ -38,6 +38,7 @@ object RNG {
   def boolean(rng: RNG): (Boolean, RNG) =
     rng.nextInt match { case (i,rng2) => (i%2==0,rng2) }
 
+  // Ex. 6.3
   def intDouble(rng: RNG): ((Int, Double), RNG) = {
     val (i, r1) = rng.nextInt
     val (d, r2) = double(r1)
