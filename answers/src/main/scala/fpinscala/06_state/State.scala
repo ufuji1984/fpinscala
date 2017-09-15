@@ -1,8 +1,10 @@
 package fpinscala.state
 
 
-trait RNG {
-  def nextInt: (Int, RNG) // Should generate a random `Int`. We'll later define other functions in terms of `nextInt`.
+trait RNG { // RandomNumberGeneratorの略？
+  def nextInt: (Int, RNG)
+  // Should generate a random `Int`.
+  // We'll later define other functions in terms of `nextInt`.
 }
 
 object RNG {
@@ -241,4 +243,3 @@ object Candy {
     s <- get
   } yield (s.coins, s.candies)
 }
-
