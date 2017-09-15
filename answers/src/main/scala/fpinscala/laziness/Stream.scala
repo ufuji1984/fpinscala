@@ -171,7 +171,7 @@ trait Stream[+A] {
       case (h,h2) => h == h2
     }
 
-  /*
+  /* Ex. 5.15
   The last element of `tails` is always the empty `Stream`, so we handle this as a special case, by appending it to the output.
   */
   def tails: Stream[Stream[A]] =
