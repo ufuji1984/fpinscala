@@ -107,7 +107,7 @@ object RNG {
   // and the resulting RNG to the second argument. It's not necessarily wrong
   // to do this the other way around, since the results are random anyway.
   //
-  // 以下は良く分からん。`g`って何？`rb`のこと？？
+  // 以下は`f`を`ra`、`g`を`rb`に読み替えると分かる気がするがそれで良いのか？
   // We could even pass the initial RNG to both `f` and `g`, but that might
   // have unexpected results. E.g. if both arguments are `RNG.int` then we would
   // always get two of the same `Int` in the result. When implementing functions
