@@ -129,6 +129,7 @@ object RNG {
   val randDoubleInt: Rand[(Double, Int)] =
     both(double, int)
 
+  // Ex. 6.7
   // In `sequence`, the base case of the fold is a `unit` action that returns
   // the empty list. At each step in the fold, we accumulate in `acc`
   // and `f` is the current element in the list.
