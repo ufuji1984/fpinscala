@@ -163,6 +163,7 @@ object RNG {
     }
   }
 
+  // Ex. 6.9
   def _map[A,B](s: Rand[A])(f: A => B): Rand[B] =
     flatMap(s)(a => unit(f(a)))
 
