@@ -229,6 +229,8 @@ object State {
   def set[S](s: S): State[S, Unit] = State(_ => ((), s))
 }
 
+// Ex. 6.11
+
 sealed trait Input
 case object Coin extends Input
 case object Turn extends Input
@@ -248,7 +250,7 @@ object Candy {
     }
 
   def simulateMachine(inputs: List[Input]): State[Machine, (Int, Int)] = for {
-    _ <- sequence(inputs map (modify[Machine] _ compose update))
+    _ <- sequence(inputs map (modify[Machine] _ compose update)) // この行がよくわからん
     s <- get
   } yield (s.coins, s.candies)
 }
