@@ -149,6 +149,7 @@ object RNG {
   def _ints(count: Int): Rand[List[Int]] =
     sequence(List.fill(count)(int))
 
+  // Ex. 6.8
   def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] =
     rng => {
       val (a, r1) = f(rng)
