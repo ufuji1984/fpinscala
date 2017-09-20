@@ -173,6 +173,8 @@ object RNG {
 
 import State._
 
+// Ex. 6.10
+
 case class State[S, +A](run: S => (A, S)) {
   def map[B](f: A => B): State[S, B] =
     flatMap(a => unit(f(a)))
